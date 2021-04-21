@@ -1,18 +1,18 @@
-<h1 align="center">GitHub Advanced Security Bootcamp March 2021</h1>
+<h1 align="center">GitHub Advanced Security Workshop</h1>
 <p align="center">
   <a href="#mega-prerequisites">Prerequisites</a> •  
   <a href="#books-resources">Resources</a>
 </p>
 
-> This bootcamp is designed to get you familiar with GitHub Advanced Security (GHAS) so that you can better understand how to use it in your own repositories.
+> This workshop is designed to get you familiar with GitHub Advanced Security (GHAS) so that you can better understand how to use it in your own repositories.
 
 ## :mega: Prerequisites
 To participate in the workshop you need a GitHub account and need to be invited to the workshop organization [advanced-security](https://github.com/advanced-security). If your repository hasn't been automatically created in the workshop organization, create a new project and push a copy of the `ghas-bootcamp-march-2021` project.
 
 ```bash
-git clone https://github.com/advanced-security/ghas-bootcamp-march-2021.git
-cd ghas-bootcamp-march-2021
-git remote set-url origin https://github.com/advanced-security/ghas-bootcamp-march-2021.git
+git clone https://github.com/advanced-security/ghas-workshop.git
+cd ghas-workshop
+git remote set-url origin https://github.com/advanced-security/ghas-workshop.git
 ```
 
 ## :books: Resources
