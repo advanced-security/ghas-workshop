@@ -82,7 +82,7 @@ To demonstrate this, we will enable CodeQL analysis in an Actions pipeline using
           --github-url "https://github.com" \
           --repository "${{ github.repository }}" \
           --github-auth-stdin \
-          --languages "java,javascript,go,python"
+          --languages "java,javascript,python"
         codeql-runner autobuild
         echo "${{ github.token }}" | codeql-runner analyze \
           --github-url "https://github.com" \
