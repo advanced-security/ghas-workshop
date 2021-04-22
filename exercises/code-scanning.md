@@ -90,7 +90,7 @@ To demonstrate this, we will enable CodeQL analysis in an Actions pipeline using
           --github-auth-stdin \
           --commit "${{ github.sha }}" \
           --ref "${{ github.ref }}"
-    ```
+   ```
 #### Customizing CodeQL Configuration
 
 By default, CodeQL uses a selection of queries that provide high quality security results.
