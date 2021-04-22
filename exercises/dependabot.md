@@ -48,6 +48,19 @@ Dependabot can automatically create PRs to upgrade vulnerable dependencies to no
 
 After a few minutes multiple PRs will be created that will upgrade vulnerable dependencies.
 
+
+#### Introducing a new vulnerable dependency
+
+  1. Add a [vulnerable dependency](https://github.com/advisories?query=severity%3Ahigh+ecosystem%3Apip) to `auth-service/requirements.txt`. For example:
+
+    ```requirements.txt
+    ...
+    django==2.1.0
+    ```
+  2. Open a pull request 
+  3. Review the dependency graph changes in the pull request.
+
+
 #### Configuring Dependabot security updates
 
 To successfully integrate the security updates into the SDLC, it is possible to configure various aspects such as:
@@ -68,7 +81,7 @@ Create the file `.github/dependabot.yml` in your repository and configure the `p
 
   5. Add the custom label `triage-required` to enable filtering of the PRs (Make sure the label exists by adding it to `https://github.com/githubuniverseworkhops/<your repo>/labels`).
 
-  6. Verify your changes by adding a [vulnerable dependency](https://github.com/advisories?query=severity%3Ahigh+ecosystem%3Apip) to `auth-service/requirements.txt`. For example:
+  6. Verify your changes by adding, and merging, a [vulnerable dependency](https://github.com/advisories?query=severity%3Ahigh+ecosystem%3Apip) to `auth-service/requirements.txt`. For example:
 
     ```requirements.txt
     ...

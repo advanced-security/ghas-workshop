@@ -24,38 +24,7 @@ Code scanning enables developers to integrate security analysis tooling into the
 
 4. Head over to the `Actions` tab to see the created workflow in action.
 
-#### Reviewing any failed analysis job
-
-CodeQL requires a build of compiled languages, and an analysis job can fail if our *autobuilder* is unable to build a program to extract an analysis database.
-
-1. Head over to the Java job and determine if there's a build failure.
-
-2. Our project targets JDK version 11. How can we check the java version that the GitHub hosted runner is using?
-
-<details>
-<summary>Solution</summary>
-
-    - run: |
-        echo "java version"
-        java -version
-
-</details>
-
-#### Using context and expressions to modify build
-
-How would you [modify](https://docs.github.com/en/free-pro-team@latest/actions/reference/context-and-expression-syntax-for-github-actions) the build such that the autobuild step runs only for Java?
-
-  <details>
-  <summary>Solution</summary>
-
-  You can run this step for only `Java` analysis when you use the `if` expression and `matrix` context.
-
-  ```yaml
-  - if: matrix.language == 'java'  
-    uses: github/codeql-action/autobuild@v1
-  ```
-  </details>
-  
+ 
 #### Reviewing and managing results
 
 1. Go to the `Code scanning results` in the `Security` tab.
@@ -84,16 +53,44 @@ Follow the next steps to see it in action.
     ```
 2. Is the vulnerability detected in your PR?
 
-#### _Stretch Exercise 1: Fixing false positive results_
+#### Enabling CodeQL in third-party CI/CD
 
-If you have identified a false positive, how would you deal with that? What if this is a common pattern within your applications?
+CodeQL analysis is not limited to only GitHub Actions - it can also be run in other CI/CD pipelines, such as Azure DevOps or Jenkins.
 
-#### _Stretch Exercise 2: Enabling code scanning on your own repository_
+To demonstrate this, we will enable CodeQL analysis in an Actions pipeline using only shell commands - no Actions!
 
-So far you've learned how to enable secret scanning, Dependabot and code scanning. Try enabling this on your own repository, and see what kind of results you get!
+ 1. Create a copy of the `codeql-analysis.yml` file named `codeql-analysis-third-party.yml`.
 
-### _**Practical Exercise 3**_
+ 2. Remove the `init`, `autobuild` and `analyze` steps.
 
+ 3. Remove the `strategy` section to disable the matrix job. (_note: matrix jobs are not currently supported in 3rd party CI/CD integrations_)
+
+ 3. Add a step to download the CodeQL runner and make it executable:
+
+   ```
+    - name: Install codeql-runner
+      run: |
+        wget -q https://github.com/github/codeql-action/releases/latest/download/codeql-runner-linux
+        sudo install -o root -g root -m 0755 codeql-runner-linux /usr/local/bin/codeql-runner
+   ```
+ 4. Add a step to execute the CodeQL runner
+
+   ```
+    - name: Execute CodeQL Runner
+      run: |
+        echo "${{ github.token }}" | codeql-runner init \
+          --github-url "https://github.com" \
+          --repository "${{ github.repository }}" \
+          --github-auth-stdin \
+          --languages "java,javascript,go,python"
+        codeql-runner autobuild
+        echo "${{ github.token }}" | codeql-runner analyze \
+          --github-url "https://github.com" \
+          --repository "${{ github.repository }}" \
+          --github-auth-stdin \
+          --commit "${{ github.sha }}" \
+          --ref "${{ github.ref }}"
+    ```
 #### Customizing CodeQL Configuration
 
 By default, CodeQL uses a selection of queries that provide high quality security results.

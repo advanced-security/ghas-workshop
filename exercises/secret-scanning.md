@@ -58,7 +58,7 @@ While we can close a detected secret as being used in a test, we can also config
     ```
     </details>
 
-3. Test the pattern by adding another secret or to the file `storage-service/src/main/resources/application.dev.properties`
+3. Test the pattern by adding another secret or to the file `storage-service/src/main/resources/application.properties`
 
     For example change the `secretKey` to
     ```
